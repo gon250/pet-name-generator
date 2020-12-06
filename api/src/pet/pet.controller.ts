@@ -38,8 +38,4 @@ export class PetsController {
   remove(@Param('id') id: string) {
     return this._service.remove(id);
   }
-
-  test() {
-    return 'Hola';
-  }
 }
