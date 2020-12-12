@@ -1,12 +1,4 @@
-import {
-  Body,
-  Delete,
-  Get,
-  Injectable,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -20,26 +12,19 @@ export class PetService {
     private _repository: Repository<Pet>,
   ) {}
 
-  @Get()
   async findAll(): Promise<Pet[]> {
     return await this._repository.find();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Pet> {
+  async findOne(id: string): Promise<Pet> {
     return this._repository.findOne(+id);
   }
 
-  @Post()
-  async create(@Body() createPetDto: PetDTO): Promise<Pet> {
+  async create(createPetDto: PetDTO): Promise<Pet> {
     return await this._repository.save(createPetDto);
   }
 
-  @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updatedPet: PetDTO,
-  ): Promise<Pet> {
+  async update(id: string, updatedPet: PetDTO): Promise<Pet> {
     const petToBeUpdated = await this._repository.findOne(+id);
     petToBeUpdated.name = updatedPet.name;
     petToBeUpdated.male = updatedPet.male;
@@ -47,8 +32,7 @@ export class PetService {
     return await this._repository.save(petToBeUpdated);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<any> {
+  async remove(id: string): Promise<any> {
     return await this._repository.delete(+id);
   }
 }

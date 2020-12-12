@@ -10,7 +10,7 @@ import {
 import { PetDTO } from 'src/dto/pet.dto';
 import { PetService } from './pet.service';
 
-@Controller()
+@Controller('pets')
 export class PetsController {
   constructor(private _service: PetService) {}
 

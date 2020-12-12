@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Pet } from './entities/pet.entity';
-import { PetsController } from './pet/pet.controller';
-import { PetService } from './pet/pet.service';
+import { UserModule } from './user/user.module';
+import { PetModule } from './pet/pet.module';
 
 @Module({
   imports: [
+    UserModule,
+    PetModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -16,9 +17,8 @@ import { PetService } from './pet/pet.service';
       entities: ['dist/**/*.entity{.ts,.js}', 'src/entity/**/*.ts'],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Pet]),
   ],
-  controllers: [PetsController],
-  providers: [PetService],
+  // controllers: [PetsController],
+  // providers: [PetService],
 })
 export class AppModule {}
