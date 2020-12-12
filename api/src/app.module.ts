@@ -14,11 +14,12 @@ import { PetModule } from './pet/pet.module';
       username: 'admin',
       password: 'admin',
       database: 'petsdb',
-      entities: ['dist/**/*.entity{.ts,.js}', 'src/entity/**/*.ts'],
+      entities: [__dirname + './**/**/*.entity{.ts,.js}'],
+      autoLoadEntities: true,
       synchronize: true,
+      logging: true,
+      logger: 'file',
     }),
   ],
-  // controllers: [PetsController],
-  // providers: [PetService],
 })
 export class AppModule {}
