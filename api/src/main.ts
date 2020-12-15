@@ -1,19 +1,19 @@
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { initSwagger } from './app.swagger';
+import { SERVER_PORT } from './config/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  const config = app.get(ConfigService);
+  const port = parseInt(config.get<string>(SERVER_PORT), 10) || 9090;
 
-  const options = new DocumentBuilder()
-    .setTitle('Random name pate')
-    .setDescription('Pets names generator')
-    .setVersion('0.1')
-    .addTag('pets')
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  initSwagger(app);
 
-  await app.listen(9090);
+  await app.listen(port);
+  logger.log(`Server is running at ${await app.getUrl()}`);
 }
 bootstrap();
