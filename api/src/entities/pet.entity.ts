@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+// TODO: Validate by typeorm.
 @Entity()
 export class Pet {
   @PrimaryGeneratedColumn()
