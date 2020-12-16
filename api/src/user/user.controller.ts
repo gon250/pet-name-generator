@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/common/decorators/auth.decorator';
 import { UserDTO } from 'src/dto/user.dto';
 import { UserService } from './user.service';
 
@@ -21,11 +22,13 @@ export class UserController {
     return this._service.create(createUserDto);
   }
 
+  @Auth()
   @Get()
   findAll() {
     return this._service.findAll();
   }
 
+  @Auth()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this._service.findById(id);
@@ -36,6 +39,7 @@ export class UserController {
     return await this._service.update(id, updatedPet);
   }
 
+  @Auth()
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return await this._service.remove(id);
